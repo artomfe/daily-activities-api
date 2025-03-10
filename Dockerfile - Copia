@@ -1,0 +1,41 @@
+FROM php:8.2-fpm-alpine
+
+# Instalação de dependências do sistema
+RUN apk update && apk add --no-cache \
+    git \
+    zip \
+    unzip \
+    libzip-dev \
+    oniguruma-dev \
+    icu-dev \
+    $PHPIZE_DEPS
+
+# Instalação das extensões PHP necessárias
+RUN docker-php-ext-install pdo_mysql zip intl mbstring
+
+# Instalação do Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Define o diretório de trabalho
+WORKDIR /var/www/html
+
+# Copia os arquivos do projeto para o container
+COPY . .
+
+# Instala as dependências do Composer
+RUN composer install --no-ansi --no-dev --no-scripts --no-interaction --optimize-autoloader
+
+# Copia o arquivo .env.example para .env
+RUN cp .env.example .env
+
+# Gera a chave da aplicação
+RUN php artisan key:generate
+
+# Permissões para o diretório storage
+RUN chmod -R 777 storage
+
+# Expõe a porta 9000
+EXPOSE 9000
+
+# Comando para iniciar o servidor PHP-FPM
+CMD ["php-fpm"]
