@@ -33,6 +33,7 @@ class TaskController extends Controller
             'title' => 'required|string',
             'description' => 'nullable|string',
             'reward_id' => 'required|exists:rewards,id',
+            'due_date' => 'nullable|date',
         ]);
 
         $task = Task::create([
@@ -41,6 +42,7 @@ class TaskController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'reward_id' => $request->reward_id,
+            'due_date' => $request->due_date,
         ]);
 
         return response()->json($task, 201);
@@ -78,6 +80,7 @@ class TaskController extends Controller
             'title' => 'required|string',
             'description' => 'nullable|string',
             'reward_id' => 'required|exists:rewards,id',
+            'due_date' => 'nullable|date',
         ]);
 
         $task->update([
@@ -85,6 +88,7 @@ class TaskController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'reward_id' => $request->reward_id,
+            'due_date' => $request->due_date,
         ]);
 
         return response()->json($task);

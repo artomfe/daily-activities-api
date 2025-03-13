@@ -29,18 +29,21 @@ class GoalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'user_id' => 'required|integer',
             'title' => 'required|string',
             'description' => 'nullable|string',
             'reward_id' => 'required|exists:rewards,id',
+            'due_date' => 'nullable|date', // Adicionado
         ]);
-
+    
         $goal = Goal::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
             'description' => $request->description,
             'reward_id' => $request->reward_id,
+            'due_date' => $request->due_date, // Adicionado
         ]);
-
+    
         return response()->json($goal, 201);
     }
 
@@ -75,12 +78,14 @@ class GoalController extends Controller
             'title' => 'required|string',
             'description' => 'nullable|string',
             'reward_id' => 'required|exists:rewards,id',
+            'due_date' => 'nullable|date', 
         ]);
 
         $goal->update([
             'title' => $request->title,
             'description' => $request->description,
             'reward_id' => $request->reward_id,
+            'due_date' => $request->due_date,
         ]);
 
         return response()->json($goal);

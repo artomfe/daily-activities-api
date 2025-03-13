@@ -16,6 +16,7 @@ class Task extends Model
         'description',
         'reward_id',
         'completed',
+        'due_date',
         'completed_at',
     ];
 
