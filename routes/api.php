@@ -6,6 +6,8 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\RewardController;
 use App\Http\Controllers\API\GoalController;
 use App\Http\Controllers\API\TaskController;
+use App\Http\Controllers\API\ItemController;
+use App\Http\Controllers\API\CategoryController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -23,4 +25,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
      // Rotas para Tasks
      Route::apiResource('tasks', TaskController::class);
+
+      // Rotas para Items
+    Route::apiResource('items', ItemController::class);
+
+    // Rotas para Categories
+    Route::apiResource('categories', CategoryController::class);
+    Route::get('/select-categories', [CategoryController::class, 'listForSelect']);
 });
