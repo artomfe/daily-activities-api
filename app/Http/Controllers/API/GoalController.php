@@ -16,7 +16,7 @@ class GoalController extends Controller
      */
     public function index()
     {
-        $goals = Goal::where('user_id', Auth::id())->get();
+        $goals = Goal::where('user_id', Auth::id())->with('reward')->get();
         return response()->json($goals);
     }
 
@@ -29,7 +29,6 @@ class GoalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|integer',
             'title' => 'required|string',
             'description' => 'nullable|string',
             'reward_id' => 'required|exists:rewards,id',
