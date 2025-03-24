@@ -8,6 +8,7 @@ use App\Http\Controllers\API\GoalController;
 use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\ItemController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\LevelController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -32,4 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Rotas para Categories
     Route::apiResource('categories', CategoryController::class);
     Route::get('/select-categories', [CategoryController::class, 'listForSelect']);
+
+    // Rotas para Levels
+    Route::apiResource('levels', LevelController::class);
 });
